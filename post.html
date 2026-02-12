@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet Skill - Post Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --primary: #00d4ff; --pink: #ff007f; --dark: #1a1a1a; --footer-bg: #1a1a1a; --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); --blue: #007bff; }
+        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; }
+        
+        header { 
+            background: #fff; 
+            padding: 12px 3% 8px; 
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+        .header-main { display: flex; flex-direction: column; position: relative; }
+        .header-top-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        
+        .logo-section { display: flex; align-items: center; gap: 15px; margin-top: 6px; }
+        .logo-box { display: flex; align-items: center; gap: 10px; text-decoration: none !important; color: inherit; border: none; }
+        .icon { width: 40px; height: 40px; border-radius: 50%; border: 2.5px solid var(--primary); overflow: hidden; transition: var(--transition); }
+        .icon img { width: 100%; height: 100%; object-fit: cover; }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; }
+        .logo-text span { color: var(--pink); }
+
+        .logo-box:hover .icon { transform: rotate(360deg); border-color: var(--pink); }
+
+        .search-container { width: 320px; position: relative; }
+        .search-container input { 
+            width: 100%; 
+            padding: 10px 20px; 
+            border-radius: 25px; 
+            border: 1px solid #ddd; 
+            outline: none; 
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .search-container input:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(0,212,255,0.15); transform: scale(1.02); }
+        .search-container input:focus { border-color: var(--pink); }
+
+        .cat-nav { 
+            display: flex; 
+            gap: 22px; 
+            overflow-x: auto; 
+            scrollbar-width: none; 
+            margin-top: 15px; 
+            margin-left: 20%; 
+            margin-right: 320px; 
+            padding-bottom: 8px;
+        }
+        .cat-nav::-webkit-scrollbar { display: none; }
+        .cat-link { 
+            white-space: nowrap; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #555; 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        .cat-link:hover { color: var(--pink); transform: translateY(-3px); }
+        .cat-link:after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--pink); transition: var(--transition);
+        }
+        .cat-link:hover:after { width: 100%; }
+
+        .sidebar-menu { 
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; 
+            background: white; box-shadow: 5px 0 20px rgba(0,0,0,0.1); 
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2000; display: flex; flex-direction: column; 
+        }
+        .sidebar-menu.active { left: 0; }
+        .sidebar-menu-header { padding: 20px; border-bottom: 1px solid #f4f4f4; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-menu-link { display: block; padding: 14px 20px; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #f9f9f9; transition: var(--transition); }
+        .sidebar-menu-link:hover { background: #fff0f6; color: var(--pink); padding-left: 30px; }
+
+        .main-wrapper { max-width: 1250px; margin: 25px auto; display: grid; grid-template-columns: 1fr 320px; gap: 25px; padding: 0 15px; flex: 1; }
+        .post-content-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        .cat-badge { background: var(--pink); color: white; padding: 4px 12px; border-radius: 5px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        #postImg { width: 100%; border-radius: 12px; margin: 20px 0; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: var(--transition); }
+        #postImg:hover { transform: scale(1.01); }
+        
+        /* AdSense Box Style */
+        .ad-unit { width: 100%; text-align: center; margin: 15px 0; background: #eee; border: 1px dashed #bbb; color: #999; padding: 10px; font-size: 12px; border-radius: 8px; }
+
+        .desc-text { font-size: 18px; color: #444; margin-bottom: 40px; }
+        .desc-text img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px 0; display: block; }
+        .desc-text h2, .desc-text h3 { margin-top: 25px; color: #1a1a1a; }
+        .desc-text ul, .desc-text ol { padding-left: 25px; }
+
+        .action-container { border: 1px solid #eef0f2; border-radius: 15px; margin-top: 50px; background: #fafbfc; overflow: hidden; }
+        .download-box { padding: 30px; text-align: center; border-bottom: 1px solid #eee; }
+        .download-btn { background: var(--blue); color: white; text-decoration: none; padding: 18px 60px; border-radius: 60px; font-weight: bold; font-size: 20px; display: inline-flex; align-items: center; gap: 15px; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,123,255,0.2); }
+        .download-btn:hover { transform: translateY(-5px); background: #0056b3; box-shadow: 0 15px 30px rgba(0,123,255,0.3); }
+
+        .recent-sidebar { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 120px; }
+        .recent-item { display: flex; gap: 15px; margin-bottom: 20px; text-decoration: none; color: inherit; transition: var(--transition); }
+        .recent-item:hover { color: var(--pink); transform: translateX(5px); }
+        .recent-item img { width: 90px; height: 60px; border-radius: 8px; object-fit: cover; }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); display: none; z-index: 1500; backdrop-filter: blur(3px); }
+        
+        /* Footer with Policy Links */
+        footer { background: var(--footer-bg); color: #888; padding: 40px; text-align: center; margin-top: 50px; }
+        .footer-legal-links { margin-bottom: 20px; }
+        .footer-legal-links a { color: #aaa; text-decoration: none; margin: 0 10px; font-size: 14px; font-weight: bold; }
+        .footer-legal-links a:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-main">
+        <div class="header-top-row">
+            <div class="logo-section">
+                <div class="menu-btn" onclick="toggleMenu()" style="font-size:28px; cursor:pointer; color:#333;">☰</div>
+                <a href="/" class="logo-box">
+                    <div class="icon"><img src="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/Image_to_url_V2/20250611_004115_20250611_131539-imagetourl.cloud-1770749760299-z8zjkk.jpg"></div>
+                    <div class="logo-text">INTERNET <span>SKILL</span></div>
+                </a>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search tech updates..." onkeyup="searchPosts()">
+            </div>
+        </div>
+
+        <nav class="cat-nav">
+            <a href="/" class="cat-link">Home</a>
+            <a href="/?cat=APPS" class="cat-link">Apps</a>
+            <a href="/?cat=TECHNOLOGY" class="cat-link">Technology</a>
+            <a href="/?cat=EDUCATIONAL" class="cat-link">Educational</a>
+            <a href="/?cat=HACKING" class="cat-link">Hacking</a>
+            <a href="/?cat=AI IMAGE PROMPT" class="cat-link">AI Image</a>
+            <a href="/?cat=AI VIDEO PROMPT" class="cat-link">AI Video</a>
+            <a href="/?cat=SMARTPHONE" class="cat-link">Smartphone</a>
+            <a href="/?cat=HINDI STORY" class="cat-link">Hindi Story</a>
+            <a href="/?cat=NEWS" class="cat-link">News</a>
+        </nav>
+    </div>
+</header>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="sidebar-menu" id="sidebar">
+    <div class="sidebar-menu-header">
+        <h3 style="margin:0; font-family:'Orbitron';">MENU</h3>
+        <span onclick="toggleMenu()" style="cursor:pointer; font-size:30px;">&times;</span>
+    </div>
+    <div class="sidebar-content" style="padding: 10px 0;">
+        <a href="/" class="sidebar-menu-link">🏠 Home</a>
+        <a href="/?cat=APPS" class="sidebar-menu-link">📱 Apps</a>
+        <a href="/?cat=TECHNOLOGY" class="sidebar-menu-link">⚙️ Technology</a>
+        <a href="/?cat=EDUCATIONAL" class="sidebar-menu-link">📚 Educational</a>
+        <a href="/?cat=HACKING" class="sidebar-menu-link">🛡️ Hacking</a>
+        <a href="/?cat=AI IMAGE PROMPT" class="sidebar-menu-link">🎨 AI Image</a>
+        <a href="/?cat=AI VIDEO PROMPT" class="sidebar-menu-link">🎬 AI Video</a>
+        <a href="/?cat=SMARTPHONE" class="sidebar-menu-link">🤳 Smartphone</a>
+        <a href="/?cat=HINDI STORY" class="sidebar-menu-link">📖 Hindi Story</a>
+        <a href="/?cat=NEWS" class="sidebar-menu-link">📰 News</a>
+    </div>
+    <div style="padding: 20px; border-top: 1px solid #eee; margin-top: auto;">
+        <div style="display:flex; gap:15px; font-size:22px;">
+            <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank" style="color:#444;"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.youtube.com/@Internet_Skill" target="_blank" style="color:#444;"><i class="fab fa-youtube"></i></a>
+            <a href="https://t.me/Internetskil" target="_blank" style="color:#444;"><i class="fab fa-telegram"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="post-content-card">
+        <span id="pCat" class="cat-badge">CATEGORY</span>
+        <h1 id="pTitle">Loading Post...</h1>
+        
+        <div class="ad-unit">Advertisement (Header Ad)</div>
+
+        <img id="postImg" src="">
+        
+        <div id="pDesc" class="desc-text"></div>
+
+        <div class="ad-unit">Advertisement (Content Bottom Ad)</div>
+
+        <div class="action-container">
+            <div class="download-box">
+                <a href="#" id="dLink" class="download-btn" target="_blank">
+                    <i class="fas fa-download"></i> DOWNLOAD NOW
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-sidebar">
+        <h3 style="border-left: 5px solid var(--pink); padding-left: 12px; margin-bottom: 25px;">RECENT POSTS</h3>
+        <div id="recentList"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-legal-links">
+        <a href="/about">About Us</a> | 
+        <a href="/contact">Contact Us</a> | 
+        <a href="/privacy">Privacy Policy</a> | 
+        <a href="/disclaimer">Disclaimer</a>
+    </div>
+    <div style="margin-bottom: 20px; font-size: 20px;">
+        <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@Internet_Skill" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/Internetskil" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-telegram"></i></a>
+    </div>
+    &copy; 2026 Internet Skill (.in). All Rights Reserved.
+</footer>
+
+<script>
+    async function loadPostData() {
+        try {
+            const id = window.location.pathname.split('/').pop();
+            const res = await fetch('/posts.json');
+            const posts = await res.json();
+            const post = posts.find(p => p.id == id);
+
+            if(post) {
+                document.getElementById('pTitle').innerText = post.title;
+                document.getElementById('pDesc').innerHTML = post.desc;
+                document.getElementById('pCat').innerText = post.category || 'General';
+                const img = document.getElementById('postImg');
+                img.src = post.img;
+                img.style.display = 'block';
+                document.getElementById('dLink').href = post.link || "#";
+                document.title = post.title + " - Internet Skill";
+            }
+
+            const recents = posts.filter(p => p.id != id).reverse().slice(0, 8);
+            document.getElementById('recentList').innerHTML = recents.map(p => `
+                <a href="/post/${p.id}" class="recent-item">
+                    <img src="${p.img}">
+                    <div>
+                        <h4 style="font-size:14px; margin:0; line-height:1.4;">${p.title.substring(0, 55)}...</h4>
+                    </div>
+                </a>
+            `).join('');
+        } catch (e) { console.error("Error:", e); }
+    }
+
+    function toggleMenu() {
+        const sb = document.getElementById('sidebar');
+        const ov = document.getElementById('overlay');
+        sb.classList.toggle('active');
+        ov.style.display = sb.classList.contains('active') ? 'block' : 'none';
+    }
+
+    function searchPosts() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        if(event.key === 'Enter') { window.location.href = '/?search=' + term; }
+    }
+
+    loadPostData();
+</script>
+
+</body>
+</html>
