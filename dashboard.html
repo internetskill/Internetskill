@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Internet Skill - Pro SEO Admin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        :root { 
+            --primary: #00d4ff; 
+            --pink: #ff007f; 
+            --dark: #111; 
+            --bg: #f0f2f5;
+            --transition: all 0.3s ease;
+        }
+        body { font-family: 'Roboto', sans-serif; margin: 0; display: flex; background: var(--bg); color: #333; }
+        
+        /* Sidebar */
+        .sidebar { width: 280px; background: var(--dark); color: white; height: 100vh; padding: 25px; position: fixed; overflow-y: auto; }
+        .sidebar h2 { color: var(--primary); font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px rgba(0,212,255,0.3); }
+        .view-site-btn { 
+            display: block; margin-top: 20px; color: white; text-decoration: none; text-align: center;
+            padding: 12px; border: 2px solid var(--primary); border-radius: 30px; transition: var(--transition); font-weight: bold;
+        }
+        .view-site-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px rgba(0,212,255,0.4); }
+
+        .main { margin-left: 330px; padding: 30px; flex: 1; max-width: 1000px; }
+        
+        .card { 
+            background: white; padding: 30px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px; 
+            border-top: 5px solid var(--primary);
+        }
+        
+        h2 { margin-top: 0; color: var(--dark); border-left: 6px solid var(--pink); padding-left: 15px; }
+        h3 { color: var(--pink); font-size: 18px; margin-top: 25px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        input, select, textarea { 
+            width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #eee; 
+            border-radius: 12px; box-sizing: border-box; font-size: 15px; outline: none;
+            transition: var(--transition); background: #fdfdfd;
+        }
+        input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+        
+        .tox-tinymce { border-radius: 12px !important; border: 2px solid #eee !important; margin-bottom: 20px; }
+
+        .btn-pub { 
+            background: linear-gradient(45deg, var(--primary), #00a8ff); color: #000; padding: 16px; border: none; 
+            cursor: pointer; font-weight: 900; width: 100%; border-radius: 12px; 
+            font-size: 18px; transition: var(--transition); text-transform: uppercase;
+        }
+        .btn-pub:hover { background: linear-gradient(45deg, var(--pink), #ff4757); color: #fff; transform: translateY(-3px); }
+
+        .post-item { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #eee; align-items: center; }
+        .action-btns button { margin-left: 5px; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; color: white; font-weight: bold; }
+        .edit-btn { background: #2ed573; }
+        .del-btn { background: #ff4757; }
+
+        .pass-box { background: #222; padding: 20px; border-radius: 15px; margin-top: 30px; border: 1px dashed var(--primary); }
+        .pass-box input { background: #333; border: 1px solid #444; color: white; margin: 5px 0; padding: 10px; font-size: 13px; }
+
+        /* SEO & Ads Badge */
+        .badge-seo { background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>INTERNET SKILL</h2>
+        <p style="color: #888;">SEO & Ads Enabled Admin</p>
+        <a href="/" class="view-site-btn" target="_blank">🌐 View Website</a>
+        
+        <div class="pass-box">
+            <h4 style="margin:0 0 10px 0; color:white;">🔒 Change Password</h4>
+            <form id="passForm" onsubmit="changePassword(event)">
+                <input type="password" id="oldPass" placeholder="Current Password" required>
+                <input type="password" id="newPass" placeholder="New Password" required>
+                <button type="submit" style="width:100%; background:var(--pink); color:white; padding:10px; border:none; border-radius:8px; cursor:pointer;">Update</button>
+            </form>
+        </div>
+        
+        <button onclick="logout()" style="margin-top:20px; width:100%; background:transparent; color:#888; border:1px solid #555; padding:10px; border-radius:20px; cursor:pointer;">Logout</button>
+    </div>
+
+    <div class="main">
+        <div class="card">
+            <div id="editInfo" style="display:none; background:#fff3cd; color:#856404; padding:10px; border-radius:10px; margin-bottom:15px; font-weight:bold;">⚠️ Editing Mode On</div>
+            <h2 id="formHeader">Create New SEO Post 🚀</h2>
+            
+            <form id="postForm">
+                <input type="hidden" id="editId">
+                
+                <h3>1. Basic Information</h3>
+                <input type="text" id="title" placeholder="Post Title (H1 Tag)" required>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="img" placeholder="Main Thumbnail URL" required>
+                    <input type="text" id="link" placeholder="Download Button Link">
+                </div>
+
+                <select id="category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="APPS">📱 APPS</option>
+                    <option value="TECHNOLOGY">⚙️ TECHNOLOGY</option>
+                    <option value="EDUCATIONAL">📚 EDUCATIONAL</option>
+                    <option value="HACKING">🛡️ HACKING</option>
+                    <option value="AI IMAGE PROMPT">🎨 AI IMAGE</option>
+                    <option value="AI VIDEO PROMPT">🎬 AI VIDEO</option>
+                    <option value="SMARTPHONE">🤳 SMARTPHONE</option>
+                    <option value="HINDI STORY">📖 HINDI STORY</option>
+                    <option value="NEWS">📰 NEWS</option>
+                </select>
+
+                <h3>2. SEO Tools (Search Engine Optimization)</h3>
+                <input type="text" id="seoKeywords" placeholder="Keywords (Comma separated: hacking, tech, internet skill)">
+                <textarea id="metaDesc" placeholder="Meta Description (YouTube jaisa short summary - Google search mein dikhta hai)" rows="3"></textarea>
+
+                <h3>3. Content Editor</h3>
+                <textarea id="desc"></textarea>
+
+                <h3>4. Google Ads (Place Ad Codes)</h3>
+                <textarea id="adTop" placeholder="Top Ad Code (Header ke niche)" rows="2"></textarea>
+                <textarea id="adMid" placeholder="Middle Ad Code (Content ke beech mein)" rows="2"></textarea>
+                <textarea id="adBot" placeholder="Bottom Ad Code (Download ke niche)" rows="2"></textarea>
+
+                <button type="submit" id="submitBtn" class="btn-pub" style="margin-top:20px;">PUBLISH WITH SEO & ADS</button>
+                <button type="button" id="cancelBtn" onclick="location.reload()" style="display:none; width:100%; background:#ddd; color:#333; padding:10px; border:none; border-radius:10px; margin-top:10px; cursor:pointer; font-weight:bold;">Cancel Edit</button>
+            </form>
+        </div>
+
+        <div class="card" style="border-top-color: var(--pink);">
+            <h3>Manage All Posts</h3>
+            <div id="postList">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Initialize Advanced Editor
+        tinymce.init({
+            selector: '#desc',
+            height: 450,
+            plugins: 'image link lists media table help wordcount emoticons code',
+            toolbar: 'undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright | bullist numlist | link image emoticons | code',
+            placeholder: 'Start writing your SEO optimized article...',
+            branding: false
+        });
+
+        let currentPosts = [];
+
+        // 2. Fetch Posts
+        async function fetchPosts() {
+            try {
+                const res = await fetch('/posts.json');
+                currentPosts = await res.json();
+                const list = document.getElementById('postList');
+                list.innerHTML = currentPosts.slice().reverse().map(p => `
+                    <div class="post-item">
+                        <div>
+                            <span style="font-weight:bold;">${p.title.substring(0, 50)}...</span><br>
+                            <span class="badge-seo">${p.category}</span>
+                            <span class="badge-seo" style="background:#f3e5f5; color:#7b1fa2;">SEO: ${p.seoKeywords ? '✅' : '❌'}</span>
+                        </div>
+                        <div class="action-btns">
+                            <button class="edit-btn" onclick="triggerEdit(${p.id})">Edit</button>
+                            <button class="del-btn" onclick="deleteP(${p.id})">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch(e) { console.log(e); }
+        }
+
+        // 3. Edit Logic (Updated to fill SEO & Ads)
+        function triggerEdit(id) {
+            const post = currentPosts.find(p => p.id == id);
+            if(post) {
+                document.getElementById('editId').value = post.id;
+                document.getElementById('title').value = post.title;
+                document.getElementById('img').value = post.img;
+                document.getElementById('link').value = post.link || '';
+                document.getElementById('category').value = post.category;
+                document.getElementById('seoKeywords').value = post.seoKeywords || '';
+                document.getElementById('metaDesc').value = post.metaDesc || '';
+                document.getElementById('adTop').value = post.adTop || '';
+                document.getElementById('adMid').value = post.adMid || '';
+                document.getElementById('adBot').value = post.adBot || '';
+                
+                tinymce.get('desc').setContent(post.desc);
+                
+                document.getElementById('formHeader').innerText = "Update SEO Post ✏️";
+                document.getElementById('submitBtn').innerText = "UPDATE CHANGES";
+                document.getElementById('editInfo').style.display = "block";
+                document.getElementById('cancelBtn').style.display = "block";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // 4. Save Logic
+        document.getElementById('postForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const editId = document.getElementById('editId').value;
+            const postData = {
+                title: document.getElementById('title').value,
+                img: document.getElementById('img').value,
+                link: document.getElementById('link').value,
+                category: document.getElementById('category').value,
+                seoKeywords: document.getElementById('seoKeywords').value,
+                metaDesc: document.getElementById('metaDesc').value,
+                adTop: document.getElementById('adTop').value,
+                adMid: document.getElementById('adMid').value,
+                adBot: document.getElementById('adBot').value,
+                desc: tinymce.get('desc').getContent()
+            };
+
+            const url = editId ? `/update-post/${editId}` : '/add-post';
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(postData)
+            });
+
+            if(res.ok) {
+                alert('Success!');
+                location.reload();
+            }
+        };
+
+        async function deleteP(id) {
+            if(confirm('Delete this post?')) {
+                await fetch('/delete-post/' + id, { method: 'POST' });
+                fetchPosts();
+            }
+        }
+
+        async function changePassword(e) {
+            e.preventDefault();
+            const oldPass = document.getElementById('oldPass').value;
+            const newPass = document.getElementById('newPass').value;
+            const res = await fetch('/change-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldPass, newPass })
+            });
+            const data = await res.json();
+            if (data.success) { alert("Success!"); logout(); }
+            else { alert("Error: " + data.message); }
+        }
+
+        function logout() { window.location.href = "/login.html"; }
+        fetchPosts();
+    </script>
+</body>
+</html>

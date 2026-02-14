@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Post - Admin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        /* Editor Height */
+        .tox-tinymce { height: 500px !important; }
+
+        .btn { background: #00d4ff; color: white; padding: 15px; width: 100%; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn:hover { background: #008cb3; }
+        
+        .back-link { display: block; text-align: center; margin-top: 15px; text-decoration: none; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add New Post</h2>
+    <form id="addPostForm">
+        
+        <div class="form-group">
+            <label>Post Title</label>
+            <input type="text" id="title" placeholder="Enter post title" required>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select id="category">
+                <option value="APPS">Apps</option>
+                <option value="TECHNOLOGY">Technology</option>
+                <option value="EDUCATIONAL">Educational</option>
+                <option value="HACKING">Hacking</option>
+                <option value="AI IMAGE PROMPT">AI Image Prompt</option>
+                <option value="AI VIDEO PROMPT">AI Video Prompt</option>
+                <option value="SMARTPHONE">Smartphone</option>
+                <option value="HINDI STORY">Hindi Story</option>
+                <option value="NEWS">News</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Main Thumbnail URL (Top Image)</label>
+            <input type="text" id="img" placeholder="Paste image link here" required>
+        </div>
+
+        <div class="form-group">
+            <label>Download Link (Optional)</label>
+            <input type="text" id="link" placeholder="Paste download link here">
+        </div>
+
+        <div class="form-group">
+            <label>Post Description (Full Content)</label>
+            <textarea id="desc"></textarea>
+        </div>
+
+        <button type="submit" class="btn">Publish Post</button>
+        <a href="/dashboard.html" class="back-link">Back to Dashboard</a>
+    </form>
+</div>
+
+<script>
+    // Initialize Advanced Editor
+    tinymce.init({
+        selector: '#desc',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | forecolor backcolor',
+        placeholder: 'Write your article here... You can add images, colors, and links inside.',
+    });
+
+    document.getElementById('addPostForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Get content from TinyMCE Editor
+        const descContent = tinymce.get('desc').getContent();
+
+        const postData = {
+            title: document.getElementById('title').value,
+            category: document.getElementById('category').value,
+            img: document.getElementById('img').value,
+            link: document.getElementById('link').value,
+            desc: descContent // Rich text content with colors/images
+        };
+
+        const res = await fetch('/add-post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+        });
+
+        if(res.ok) {
+            alert('Post Added Successfully with Advanced Formatting!');
+            window.location.href = '/dashboard.html';
+        } else {
+            alert('Error adding post');
+        }
+    });
+</script>
+
+</body>
+</html>
