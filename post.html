@@ -3,117 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet Skill - Post Details</title>
+    
+    <title id="metaTitle">Internet Skill</title>
+    <meta name="description" id="metaDesc" content="Internet Skill provides the best tech tips, app reviews, and educational content.">
+    <meta name="keywords" id="metaKey" content="tech, apps, education, internet skill">
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --primary: #00d4ff; --pink: #ff007f; --dark: #1a1a1a; --footer-bg: #1a1a1a; --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); --blue: #007bff; }
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; line-height: 1.6; }
-        
-        header { 
-            background: #fff; 
-            padding: 12px 3% 8px; 
-            box-shadow: 0 1px 10px rgba(0,0,0,0.05); 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000;
+        /* --- CORE CSS --- */
+        :root { 
+            --primary: #00d4ff; 
+            --pink: #ff007f; 
+            --dark: #1a1a1a; 
+            --footer-bg: #1a1a1a; 
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            --blue: #007bff;
         }
-        .header-main { display: flex; flex-direction: column; position: relative; }
-        .header-top-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         
-        .logo-section { display: flex; align-items: center; gap: 15px; margin-top: 6px; }
-        .logo-box { display: flex; align-items: center; gap: 10px; text-decoration: none !important; color: inherit; border: none; }
-        .icon { width: 40px; height: 40px; border-radius: 50%; border: 2.5px solid var(--primary); overflow: hidden; transition: var(--transition); }
+        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        /* HEADER */
+        header { background: #fff; padding: 10px 20px; box-shadow: 0 1px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .header-main { display: flex; flex-direction: column; width: 100%; max-width: 1400px; margin: 0 auto; }
+        .header-top-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 15px; }
+        
+        /* LOGO */
+        .logo-section { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .logo-box { display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+        .icon { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--primary); overflow: hidden; }
         .icon img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; }
+        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; white-space: nowrap; }
         .logo-text span { color: var(--pink); }
+        .menu-btn { font-size: 24px; cursor: pointer; margin-right: 10px; display: none; }
 
-        .logo-box:hover .icon { transform: rotate(360deg); border-color: var(--pink); }
+        /* SEARCH */
+        .search-container { width: 300px; position: relative; }
+        .search-container input { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; font-size: 14px; box-sizing: border-box; }
 
-        .search-container { width: 320px; position: relative; }
-        .search-container input { 
-            width: 100%; 
-            padding: 10px 20px; 
-            border-radius: 25px; 
-            border: 1px solid #ddd; 
-            outline: none; 
-            font-size: 14px;
-            transition: var(--transition);
-        }
-        .search-container input:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(0,212,255,0.15); transform: scale(1.02); }
-        .search-container input:focus { border-color: var(--pink); }
+        /* MOBILE NAV */
+        .cat-nav-mobile { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; margin-top: 10px; padding-bottom: 5px; white-space: nowrap; border-top: 1px solid #f0f0f0; padding-top: 10px; }
+        .cat-nav-mobile::-webkit-scrollbar { display: none; }
+        .cat-link { font-size: 13px; font-weight: 700; color: #555; text-decoration: none; text-transform: uppercase; cursor: pointer; }
+        .cat-link:hover { color: var(--pink); }
 
-        .cat-nav { 
-            display: flex; 
-            gap: 22px; 
-            overflow-x: auto; 
-            scrollbar-width: none; 
-            margin-top: 15px; 
-            margin-left: 20%; 
-            margin-right: 320px; 
-            padding-bottom: 8px;
-        }
-        .cat-nav::-webkit-scrollbar { display: none; }
-        .cat-link { 
-            white-space: nowrap; 
-            font-size: 13px; 
-            font-weight: 700; 
-            color: #555; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-        .cat-link:hover { color: var(--pink); transform: translateY(-3px); }
-        .cat-link:after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
-            background-color: var(--pink); transition: var(--transition);
-        }
-        .cat-link:hover:after { width: 100%; }
+        /* SIDEBAR */
+        .sidebar { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); z-index: 1050; overflow-y: auto; transition: transform 0.3s ease; }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .close-btn { cursor: pointer; font-size: 28px; display: none; }
+        .sidebar-content { padding-top: 10px; }
+        .sidebar-link { display: block; padding: 12px 20px; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #f9f9f9; transition: 0.2s; }
+        .sidebar-link:hover { background: #f0f8ff; color: var(--pink); padding-left: 25px; }
+        .sidebar-footer { padding: 20px; margin-top: 20px; background: #fafafa; border-top: 1px solid #eee; }
+        .sb-social-links { display: flex; gap: 15px; font-size: 22px; justify-content: center; }
+        .sb-social-links a { color: #555; transition: 0.3s; }
+        .sb-social-links a:hover { color: var(--pink); transform: scale(1.1); }
 
-        .sidebar-menu { 
-            position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; 
-            background: white; box-shadow: 5px 0 20px rgba(0,0,0,0.1); 
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2000; display: flex; flex-direction: column; 
-        }
-        .sidebar-menu.active { left: 0; }
-        .sidebar-menu-header { padding: 20px; border-bottom: 1px solid #f4f4f4; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar-menu-link { display: block; padding: 14px 20px; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #f9f9f9; transition: var(--transition); }
-        .sidebar-menu-link:hover { background: #fff0f6; color: var(--pink); padding-left: 30px; }
+        /* LAYOUT */
+        .main-wrapper { display: flex; max-width: 1400px; margin: 0 auto; width: 100%; }
+        .content-area { flex: 1; padding: 20px; margin-left: 260px; width: calc(100% - 260px); }
 
-        .main-wrapper { max-width: 1250px; margin: 25px auto; display: grid; grid-template-columns: 1fr 320px; gap: 25px; padding: 0 15px; flex: 1; }
-        .post-content-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        /* POST CONTENT */
+        .post-content-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); margin-bottom: 30px; }
         .cat-badge { background: var(--pink); color: white; padding: 4px 12px; border-radius: 5px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        #postImg { width: 100%; border-radius: 12px; margin: 20px 0; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: var(--transition); }
-        #postImg:hover { transform: scale(1.01); }
         
-        /* AdSense Box Style */
-        .ad-unit { width: 100%; text-align: center; margin: 15px 0; background: #eee; border: 1px dashed #bbb; color: #999; padding: 10px; font-size: 12px; border-radius: 8px; }
-
-        .desc-text { font-size: 18px; color: #444; margin-bottom: 40px; }
-        .desc-text img { max-width: 100%; height: auto; border-radius: 10px; margin: 15px 0; display: block; }
-        .desc-text h2, .desc-text h3 { margin-top: 25px; color: #1a1a1a; }
-        .desc-text ul, .desc-text ol { padding-left: 25px; }
-
-        .action-container { border: 1px solid #eef0f2; border-radius: 15px; margin-top: 50px; background: #fafbfc; overflow: hidden; }
-        .download-box { padding: 30px; text-align: center; border-bottom: 1px solid #eee; }
-        .download-btn { background: var(--blue); color: white; text-decoration: none; padding: 18px 60px; border-radius: 60px; font-weight: bold; font-size: 20px; display: inline-flex; align-items: center; gap: 15px; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,123,255,0.2); }
-        .download-btn:hover { transform: translateY(-5px); background: #0056b3; box-shadow: 0 15px 30px rgba(0,123,255,0.3); }
-
-        .recent-sidebar { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); height: fit-content; position: sticky; top: 120px; }
-        .recent-item { display: flex; gap: 15px; margin-bottom: 20px; text-decoration: none; color: inherit; transition: var(--transition); }
-        .recent-item:hover { color: var(--pink); transform: translateX(5px); }
-        .recent-item img { width: 90px; height: 60px; border-radius: 8px; object-fit: cover; }
+        h1#pTitle { margin-top: 15px; font-size: 28px; line-height: 1.3; color: #222; }
+        #postImg { width: 100%; border-radius: 12px; margin: 20px 0; display: block; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); display: none; z-index: 1500; backdrop-filter: blur(3px); }
+        /* AD UNITS */
+        .ad-container { width: 100%; text-align: center; margin: 20px 0; min-height: 50px; overflow: hidden; }
+
+        .desc-text { font-size: 17px; color: #444; line-height: 1.8; margin-bottom: 40px; }
+        .desc-text img { max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0; }
         
-        /* Footer with Policy Links */
-        footer { background: var(--footer-bg); color: #888; padding: 40px; text-align: center; margin-top: 50px; }
-        .footer-legal-links { margin-bottom: 20px; }
-        .footer-legal-links a { color: #aaa; text-decoration: none; margin: 0 10px; font-size: 14px; font-weight: bold; }
-        .footer-legal-links a:hover { color: var(--primary); }
+        /* DOWNLOAD BUTTON */
+        .action-container { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+        .download-btn { 
+            background: var(--blue); color: white; text-decoration: none; 
+            padding: 15px 50px; border-radius: 50px; font-weight: bold; font-size: 18px; 
+            display: inline-flex; align-items: center; gap: 10px; 
+            transition: var(--transition); box-shadow: 0 10px 20px rgba(0,123,255,0.2); 
+        }
+        .download-btn:hover { transform: translateY(-3px); background: #0056b3; }
+
+        /* RELATED POSTS */
+        .related-box { margin-top: 40px; margin-bottom: 40px; }
+        .related-box h3 { border-left: 5px solid var(--primary); padding-left: 15px; font-size: 22px; margin-bottom: 25px; color: #222; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .related-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; cursor: pointer; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .related-card img { width: 100%; height: 180px; object-fit: cover; }
+        .related-info { padding: 15px; }
+        .related-info h4 { margin: 0; font-size: 16px; line-height: 1.5; color: #333; font-weight: bold; }
+        .related-info span { font-size: 11px; color: var(--pink); font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 5px; }
+
+        /* COMMENTS */
+        .comment-box { margin-top: 40px; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .comment-box h3 { margin-top: 0; border-left: 5px solid var(--pink); padding-left: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box; }
+        .form-group textarea { height: 100px; resize: vertical; }
+        .submit-btn { background: var(--dark); color: white; padding: 12px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: var(--pink); }
+
+        /* FOOTER */
+        footer { background: var(--footer-bg); color: #bbb; padding: 40px 20px; text-align: center; margin-left: 260px; }
+        .footer-social a { color: white; margin: 0 10px; font-size: 20px; }
+        .footer-legal-links a { color: #fff; text-decoration: none; font-size: 13px; margin: 0 10px; }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); display: none; z-index: 1040; }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); width: 260px; }
+            .sidebar.active { transform: translateX(0); }
+            .content-area { margin-left: 0; width: 100%; padding: 15px; }
+            footer { margin-left: 0; }
+            .menu-btn { display: block; }
+            .close-btn { display: block; }
+            .cat-nav-mobile { display: flex; }
+            h1#pTitle { font-size: 22px; }
+            .related-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -122,104 +133,127 @@
     <div class="header-main">
         <div class="header-top-row">
             <div class="logo-section">
-                <div class="menu-btn" onclick="toggleMenu()" style="font-size:28px; cursor:pointer; color:#333;">☰</div>
+                <div class="menu-btn" onclick="toggleMenu()">☰</div>
                 <a href="/" class="logo-box">
-                    <div class="icon"><img src="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/Image_to_url_V2/20250611_004115_20250611_131539-imagetourl.cloud-1770749760299-z8zjkk.jpg"></div>
+                    <div class="icon"><img src="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/Image_to_url_V2/20250611_004115_20250611_131539-imagetourl.cloud-1770749760299-z8zjkk.jpg" alt="Logo"></div>
                     <div class="logo-text">INTERNET <span>SKILL</span></div>
                 </a>
             </div>
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search tech updates..." onkeyup="searchPosts()">
+                <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchPosts()">
             </div>
         </div>
-
-        <nav class="cat-nav">
+        <nav class="cat-nav-mobile">
             <a href="/" class="cat-link">Home</a>
             <a href="/?cat=APPS" class="cat-link">Apps</a>
-            <a href="/?cat=TECHNOLOGY" class="cat-link">Technology</a>
-            <a href="/?cat=EDUCATIONAL" class="cat-link">Educational</a>
+            <a href="/?cat=TECHNOLOGY" class="cat-link">Tech</a>
+            <a href="/?cat=EDUCATIONAL" class="cat-link">Education</a>
             <a href="/?cat=HACKING" class="cat-link">Hacking</a>
             <a href="/?cat=AI IMAGE PROMPT" class="cat-link">AI Image</a>
-            <a href="/?cat=AI VIDEO PROMPT" class="cat-link">AI Video</a>
-            <a href="/?cat=SMARTPHONE" class="cat-link">Smartphone</a>
-            <a href="/?cat=HINDI STORY" class="cat-link">Hindi Story</a>
-            <a href="/?cat=NEWS" class="cat-link">News</a>
         </nav>
     </div>
 </header>
 
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<div class="sidebar-menu" id="sidebar">
-    <div class="sidebar-menu-header">
-        <h3 style="margin:0; font-family:'Orbitron';">MENU</h3>
-        <span onclick="toggleMenu()" style="cursor:pointer; font-size:30px;">&times;</span>
-    </div>
-    <div class="sidebar-content" style="padding: 10px 0;">
-        <a href="/" class="sidebar-menu-link">🏠 Home</a>
-        <a href="/?cat=APPS" class="sidebar-menu-link">📱 Apps</a>
-        <a href="/?cat=TECHNOLOGY" class="sidebar-menu-link">⚙️ Technology</a>
-        <a href="/?cat=EDUCATIONAL" class="sidebar-menu-link">📚 Educational</a>
-        <a href="/?cat=HACKING" class="sidebar-menu-link">🛡️ Hacking</a>
-        <a href="/?cat=AI IMAGE PROMPT" class="sidebar-menu-link">🎨 AI Image</a>
-        <a href="/?cat=AI VIDEO PROMPT" class="sidebar-menu-link">🎬 AI Video</a>
-        <a href="/?cat=SMARTPHONE" class="sidebar-menu-link">🤳 Smartphone</a>
-        <a href="/?cat=HINDI STORY" class="sidebar-menu-link">📖 Hindi Story</a>
-        <a href="/?cat=NEWS" class="sidebar-menu-link">📰 News</a>
-    </div>
-    <div style="padding: 20px; border-top: 1px solid #eee; margin-top: auto;">
-        <div style="display:flex; gap:15px; font-size:22px;">
-            <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank" style="color:#444;"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.youtube.com/@Internet_Skill" target="_blank" style="color:#444;"><i class="fab fa-youtube"></i></a>
-            <a href="https://t.me/Internetskil" target="_blank" style="color:#444;"><i class="fab fa-telegram"></i></a>
-        </div>
-    </div>
-</div>
-
 <div class="main-wrapper">
-    <div class="post-content-card">
-        <span id="pCat" class="cat-badge">CATEGORY</span>
-        <h1 id="pTitle">Loading Post...</h1>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>MENU</h3>
+            <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        </div>
+        <div class="sidebar-content">
+            <a href="/" class="sidebar-link">🏠 Home</a>
+            <a href="/?cat=APPS" class="sidebar-link">📱 Apps</a>
+            <a href="/?cat=TECHNOLOGY" class="sidebar-link">⚙️ Technology</a>
+            <a href="/?cat=EDUCATIONAL" class="sidebar-link">📚 Educational</a>
+            <a href="/?cat=HACKING" class="sidebar-link">🛡️ Hacking</a>
+            <a href="/?cat=AI IMAGE PROMPT" class="sidebar-link">🎨 AI Image</a>
+            <a href="/?cat=AI VIDEO PROMPT" class="sidebar-link">🎬 AI Video</a>
+            <a href="/?cat=SMARTPHONE" class="sidebar-link">🤳 Smartphone</a>
+            <a href="/?cat=HINDI STORY" class="sidebar-link">📖 Hindi Story</a>
+            <a href="/?cat=NEWS" class="sidebar-link">📰 News</a>
+        </div>
         
-        <div class="ad-unit">Advertisement (Header Ad)</div>
+        <div class="ad-container" id="adSidebar">
+            </div>
 
-        <img id="postImg" src="">
-        
-        <div id="pDesc" class="desc-text"></div>
-
-        <div class="ad-unit">Advertisement (Content Bottom Ad)</div>
-
-        <div class="action-container">
-            <div class="download-box">
-                <a href="#" id="dLink" class="download-btn" target="_blank">
-                    <i class="fas fa-download"></i> DOWNLOAD NOW
-                </a>
+        <div class="sidebar-footer">
+            <div class="sb-social-links">
+                <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@Internet_Skill" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/Internetskil" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://www.instagram.com/internet_skill_?igsh=OXFyMDczYWhqNmE2" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>
 
-    <div class="recent-sidebar">
-        <h3 style="border-left: 5px solid var(--pink); padding-left: 12px; margin-bottom: 25px;">RECENT POSTS</h3>
-        <div id="recentList"></div>
+    <div class="content-area">
+        
+        <div class="ad-container" id="adTop"></div>
+
+        <div class="post-content-card">
+            <span id="pCat" class="cat-badge">CATEGORY</span>
+            <h1 id="pTitle">Loading Post...</h1>
+            
+            <img id="postImg" src="">
+            
+            <div class="ad-container" id="adMid"></div>
+
+            <div id="pDesc" class="desc-text"></div>
+
+            <div class="action-container">
+                <a href="#" id="dLink" class="download-btn" target="_blank">
+                    <i class="fas fa-download"></i> DOWNLOAD NOW
+                </a>
+            </div>
+            
+            <div class="ad-container" id="adBot"></div>
+        </div>
+
+        <div class="related-box" id="relatedBox" style="display:none;">
+            <h3>You May Also Like</h3>
+            <div id="relatedGrid" class="related-grid"></div>
+        </div>
+
+        <div class="comment-box">
+            <h3>Leave a Comment</h3>
+            <form id="commentForm" onsubmit="submitComment(event)">
+                <div class="form-group"><input type="text" id="cName" placeholder="Your Name" required></div>
+                <div class="form-group"><input type="email" id="cEmail" placeholder="Your Email" required></div>
+                <div class="form-group"><textarea id="cMsg" placeholder="Write your message here..." required></textarea></div>
+                <button type="submit" class="submit-btn">Submit Comment</button>
+            </form>
+        </div>
+
     </div>
 </div>
 
 <footer>
     <div class="footer-legal-links">
-        <a href="/about">About Us</a> | 
-        <a href="/contact">Contact Us</a> | 
-        <a href="/privacy">Privacy Policy</a> | 
+        <a href="/about">About Us</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/privacy">Privacy Policy</a>
         <a href="/disclaimer">Disclaimer</a>
     </div>
-    <div style="margin-bottom: 20px; font-size: 20px;">
-        <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.youtube.com/@Internet_Skill" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-youtube"></i></a>
-        <a href="https://t.me/Internetskil" target="_blank" style="color:#888; margin:0 10px;"><i class="fab fa-telegram"></i></a>
+    <div class="footer-social" style="margin-top: 20px;">
+        <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@Internet_Skill" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/Internetskil" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.instagram.com/internet_skill_?igsh=OXFyMDczYWhqNmE2" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
-    &copy; 2026 Internet Skill (.in). All Rights Reserved.
+    <p>&copy; 2026 Internet Skill. All Rights Reserved.</p>
 </footer>
 
 <script>
+    // --- GLOBAL FIXED ADS (Aap yahan apna code badal sakte hain) ---
+    const fixedAds = {
+        top: '',
+        mid: '',
+        bot: '',
+        sidebar: ''
+    };
+
     async function loadPostData() {
         try {
             const id = window.location.pathname.split('/').pop();
@@ -228,25 +262,40 @@
             const post = posts.find(p => p.id == id);
 
             if(post) {
+                // 1. BASIC CONTENT
                 document.getElementById('pTitle').innerText = post.title;
                 document.getElementById('pDesc').innerHTML = post.desc;
                 document.getElementById('pCat').innerText = post.category || 'General';
-                const img = document.getElementById('postImg');
-                img.src = post.img;
-                img.style.display = 'block';
+                document.getElementById('postImg').src = post.img;
+                document.getElementById('postImg').style.display = 'block';
                 document.getElementById('dLink').href = post.link || "#";
-                document.title = post.title + " - Internet Skill";
-            }
 
-            const recents = posts.filter(p => p.id != id).reverse().slice(0, 8);
-            document.getElementById('recentList').innerHTML = recents.map(p => `
-                <a href="/post/${p.id}" class="recent-item">
-                    <img src="${p.img}">
-                    <div>
-                        <h4 style="font-size:14px; margin:0; line-height:1.4;">${p.title.substring(0, 55)}...</h4>
-                    </div>
-                </a>
-            `).join('');
+                // 2. SEO INJECTION
+                document.title = post.title + " - Internet Skill";
+                if(post.metaDesc) document.querySelector('meta[name="description"]').setAttribute("content", post.metaDesc);
+                if(post.seoKeywords) document.querySelector('meta[name="keywords"]').setAttribute("content", post.seoKeywords);
+
+                // 3. SMART ADS LOGIC (Priority: Dashboard > Fixed)
+                document.getElementById('adTop').innerHTML = post.adTop || fixedAds.top;
+                document.getElementById('adMid').innerHTML = post.adMid || fixedAds.mid;
+                document.getElementById('adBot').innerHTML = post.adBot || fixedAds.bot;
+                document.getElementById('adSidebar').innerHTML = post.adSidebar || fixedAds.sidebar;
+
+                // 4. RELATED POSTS
+                const relatedPosts = posts.filter(p => p.category === post.category && p.id != post.id).slice(0, 3);
+                if (relatedPosts.length > 0) {
+                    document.getElementById('relatedBox').style.display = 'block';
+                    document.getElementById('relatedGrid').innerHTML = relatedPosts.map(p => `
+                        <a href="/post/${p.id}" class="related-card">
+                            <img src="${p.img}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                            <div class="related-info">
+                                <span>${p.category}</span>
+                                <h4>${p.title.substring(0, 50)}...</h4>
+                            </div>
+                        </a>
+                    `).join('');
+                }
+            }
         } catch (e) { console.error("Error:", e); }
     }
 
@@ -255,11 +304,6 @@
         const ov = document.getElementById('overlay');
         sb.classList.toggle('active');
         ov.style.display = sb.classList.contains('active') ? 'block' : 'none';
-    }
-
-    function searchPosts() {
-        const term = document.getElementById('searchInput').value.toLowerCase();
-        if(event.key === 'Enter') { window.location.href = '/?search=' + term; }
     }
 
     loadPostData();
