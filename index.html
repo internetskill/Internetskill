@@ -3,122 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Internet Skill - Expert Tech</title>
+    
+    <title>Internet Skill</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #00d4ff; --pink: #ff007f; --dark: #1a1a1a; --footer-bg: #1a1a1a; --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f4f7f6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        :root { 
+            --primary: #00d4ff; 
+            --pink: #ff007f; 
+            --dark: #1a1a1a; 
+            --footer-bg: #1a1a1a; 
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
         
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            margin: 0; 
+            background: #f4f7f6; 
+            color: #333; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+        
+        /* HEADER STYLES */
         header { 
             background: #fff; 
-            padding: 12px 3% 8px; 
+            padding: 10px 20px; 
             box-shadow: 0 1px 10px rgba(0,0,0,0.05); 
             position: sticky; 
             top: 0; 
             z-index: 1000;
         }
-        .header-main { display: flex; flex-direction: column; position: relative; }
-        .header-top-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
         
-        .logo-section { display: flex; align-items: center; gap: 15px; margin-top: 6px; }
-        .logo-box { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-        .icon { width: 40px; height: 40px; border-radius: 50%; border: 2.5px solid var(--primary); overflow: hidden; transition: var(--transition); }
+        .header-main { display: flex; flex-direction: column; width: 100%; max-width: 1400px; margin: 0 auto; }
+        
+        .header-top-row { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            width: 100%; 
+            gap: 15px;
+        }
+        
+        /* LOGO & NAME */
+        .logo-section { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .logo-box { display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit; }
+        .icon { 
+            width: 38px; height: 38px; 
+            border-radius: 50%; /* Perfect Round Logo */
+            border: 2px solid var(--primary); 
+            overflow: hidden; 
+        }
         .icon img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-text { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; transition: var(--transition); }
+        
+        .logo-text { 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 22px; 
+            font-weight: 900; 
+            white-space: nowrap; 
+        }
         .logo-text span { color: var(--pink); }
 
-        .logo-box:hover .icon { transform: rotate(360deg); border-color: var(--pink); }
-        .logo-box:hover .logo-text { letter-spacing: 1px; }
-
-        .search-container { width: 320px; position: relative; }
-        .search-container input { 
-            width: 100%; 
-            padding: 10px 20px; 
-            border-radius: 25px; 
-            border: 1px solid #ddd; 
-            outline: none; 
-            font-size: 14px;
-            transition: var(--transition);
-        }
-        .search-container input:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(0,212,255,0.15); transform: scale(1.02); }
-        .search-container input:focus { border-color: var(--pink); background: #fff; box-shadow: 0 5px 20px rgba(255,0,127,0.1); }
-
-        .cat-nav { 
-            display: flex; 
-            gap: 22px; 
-            overflow-x: auto; 
-            scrollbar-width: none; 
-            margin-top: 15px; 
-            margin-left: 20%; 
-            margin-right: 320px; 
-            padding-bottom: 8px;
-        }
-        .cat-nav::-webkit-scrollbar { display: none; }
-        .cat-link { 
-            white-space: nowrap; 
-            font-size: 13px; 
-            font-weight: 700; 
-            color: #555; 
-            text-decoration: none; 
-            text-transform: uppercase; 
+        .menu-btn {
+            font-size: 24px;
             cursor: pointer;
-            transition: var(--transition);
-            position: relative;
+            margin-right: 10px;
+            display: none; /* Mobile par dikhega, PC par nahi */
         }
-        .cat-link:hover { color: var(--pink); transform: translateY(-3px); }
-        .cat-link:after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
-            background-color: var(--pink); transition: var(--transition);
-        }
-        .cat-link:hover:after { width: 100%; }
 
-        /* Ad Slots Design */
+        /* SEARCH BAR */
+        .search-container { width: 300px; position: relative; }
+        .search-container input { 
+            width: 100%; padding: 8px 15px; 
+            border-radius: 20px; border: 1px solid #ddd; 
+            outline: none; font-size: 14px; box-sizing: border-box; 
+        }
+
+        /* MOBILE CATEGORY SCROLL (Hidden on PC) */
+        .cat-nav-mobile { 
+            display: flex; gap: 15px; overflow-x: auto; 
+            scrollbar-width: none; margin-top: 10px; padding-bottom: 5px;
+            white-space: nowrap; border-top: 1px solid #f0f0f0; padding-top: 10px;
+        }
+        .cat-nav-mobile::-webkit-scrollbar { display: none; }
+        .cat-link { font-size: 13px; font-weight: 700; color: #555; text-decoration: none; text-transform: uppercase; cursor: pointer; }
+        .cat-link:hover { color: var(--pink); }
+
+        /* ADS STYLES */
         .ad-unit { 
-            max-width: 1200px; 
-            margin: 20px auto; 
-            padding: 10px; 
-            background: #ebebeb; 
-            border: 1px dashed #bbb; 
-            text-align: center; 
-            color: #888; 
-            font-size: 12px;
-            border-radius: 8px;
+            width: 100%; max-width: 1000px; margin: 20px auto; padding: 20px; 
+            background: #ebebeb; border: 1px dashed #bbb; 
+            text-align: center; color: #888; font-size: 12px; border-radius: 8px;
+        }
+        .sidebar-ad {
+            margin: 20px 10px; padding: 40px 10px; 
+            background: #f0f0f0; border: 1px dashed #ccc; 
+            text-align: center; font-size: 11px; color: #999;
         }
 
+        /* SIDEBAR (Desktop Fixed + Mobile Toggle) */
+        /* PC Layout ke liye Sidebar Fixed */
         .sidebar { 
-            position: fixed; top: 0; left: -280px; width: 280px; height: 100vh; 
-            background: white; box-shadow: 5px 0 20px rgba(0,0,0,0.1); 
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2000; display: flex; flex-direction: column; 
+            position: fixed; top: 0; left: 0; 
+            width: 260px; height: 100vh; 
+            background: white; 
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05); 
+            z-index: 1050; 
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
-        .sidebar.active { left: 0; }
-        .sidebar-header { padding: 20px; border-bottom: 1px solid #f4f4f4; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar-link { display: block; padding: 14px 20px; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #f9f9f9; transition: var(--transition); }
-        .sidebar-link:hover { background: #fff0f6; color: var(--pink); padding-left: 30px; }
-
-        .sidebar-footer { padding: 20px; background: #fafafa; border-top: 1px solid #eee; }
-        .sb-social-links { display: flex; gap: 18px; margin-top: 15px; }
-        .sb-social-links a { font-size: 22px; color: #444; transition: var(--transition); }
-        .sb-social-links a:hover { color: var(--pink); transform: scale(1.3) rotate(10deg); }
-
-        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; flex: 1; }
-        #postsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 35px; }
-        .post-card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 5px 25px rgba(0,0,0,0.05); transition: var(--transition); cursor: pointer; }
-        .post-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
-        .post-card img { width: 100%; height: 230px; object-fit: cover; transition: var(--transition); }
-        .post-card:hover img { transform: scale(1.05); }
-        .post-card-info { padding: 22px; }
         
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.4); display: none; z-index: 1500; backdrop-filter: blur(3px); }
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-header h3 { margin: 0; font-family:'Orbitron'; font-size: 20px; }
+        .close-btn { cursor: pointer; font-size: 28px; display: none; } /* Only for mobile */
+
+        .sidebar-content { padding-top: 10px; }
+        .sidebar-link { display: block; padding: 12px 20px; color: #333; text-decoration: none; font-weight: bold; border-bottom: 1px solid #f9f9f9; transition: 0.2s; }
+        .sidebar-link:hover { background: #f0f8ff; color: var(--pink); padding-left: 25px; }
+
+        .sidebar-footer { padding: 20px; margin-top: 20px; background: #fafafa; border-top: 1px solid #eee; }
+        .sb-social-links { display: flex; gap: 15px; font-size: 22px; justify-content: center; }
+        .sb-social-links a { color: #555; transition: 0.3s; }
+        .sb-social-links a:hover { color: var(--pink); transform: scale(1.1); }
+
+        /* LAYOUT CONTAINER */
+        /* Ye wrapper content ko sidebar ke right side mein rakhta hai */
+        .main-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            margin-left: 260px; /* Space for Sidebar on PC */
+            width: calc(100% - 260px);
+        }
+
+        #postsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
         
-        /* New AdSense & Legal Footer */
-        footer { background: var(--footer-bg); color: #bbb; padding: 60px 20px 30px; margin-top: 50px; text-align: center; }
-        .footer-legal-links { margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .footer-legal-links a { color: #fff; text-decoration: none; font-size: 14px; font-weight: bold; transition: 0.3s; }
-        .footer-legal-links a:hover { color: var(--primary); }
-        .footer-social { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
-        .footer-social a { color: #fff; font-size: 24px; transition: 0.3s; }
-        .footer-social a:hover { color: var(--pink); transform: translateY(-5px); }
+        .post-card { 
+            background: white; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+            transition: var(--transition); cursor: pointer; 
+            display: flex; flex-direction: column;
+        }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .post-card img { width: 100%; height: 180px; object-fit: cover; }
+        .post-card-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .post-cat-tag {
+            font-size: 10px; background: var(--primary); color: white; 
+            padding: 4px 8px; border-radius: 4px; font-weight: bold; 
+            align-self: flex-start; margin-bottom: 8px;
+        }
+        
+        .post-card h3 { font-size: 17px; margin: 0 0 8px 0; line-height: 1.4; color: #222; }
+        .post-card p { font-size: 13px; color: #666; margin-bottom: 12px; }
+        
+        .read-more-text { margin-top: auto; color: var(--pink); font-weight: bold; font-size: 13px; }
+
+        /* PAGINATION */
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 40px 0; }
+        .pagination button { padding: 8px 20px; border: none; background: var(--dark); color: white; border-radius: 20px; cursor: pointer; }
+        .pagination button:hover { background: var(--pink); }
+
+        /* FOOTER */
+        footer { background: var(--footer-bg); color: #bbb; padding: 40px 20px; text-align: center; margin-left: 260px; /* Align with content */ }
+        .footer-social a { color: white; margin: 0 10px; font-size: 20px; }
+        .footer-legal-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-legal-links a { color: #fff; text-decoration: none; font-size: 13px; }
+
+        /* OVERLAY */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); display: none; z-index: 1040; }
+
+        /* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); width: 260px; } /* Hide Sidebar on Mobile default */
+            .sidebar.active { transform: translateX(0); } /* Show when active */
+            
+            .content-area { margin-left: 0; width: 100%; padding: 15px; } /* Full width content */
+            footer { margin-left: 0; }
+            
+            .menu-btn { display: block; } /* Show Hamburger */
+            .close-btn { display: block; } /* Show Close btn in sidebar */
+            .cat-nav-mobile { display: flex; } /* Show horizontal scroll categories */
+
+            .header-top-row { gap: 10px; }
+            .search-container { max-width: 140px; }
+            .logo-text { font-size: 18px; }
+        }
+
+        @media (min-width: 1025px) {
+            .cat-nav-mobile { display: none; } /* Hide horizontal nav on PC */
+            .close-btn { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -127,70 +211,83 @@
     <div class="header-main">
         <div class="header-top-row">
             <div class="logo-section">
-                <div class="menu-btn" onclick="toggleMenu()" style="font-size:28px; cursor:pointer; transition: 0.3s;" onmouseover="this.style.color='#ff007f'" onmouseout="this.style.color='#333'">☰</div>
+                <div class="menu-btn" onclick="toggleMenu()">☰</div>
                 <a href="/" class="logo-box">
                     <div class="icon"><img src="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/Image_to_url_V2/20250611_004115_20250611_131539-imagetourl.cloud-1770749760299-z8zjkk.jpg" alt="Logo"></div>
                     <div class="logo-text">INTERNET <span>SKILL</span></div>
                 </a>
             </div>
+            
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search tech updates..." onkeyup="searchPosts()">
+                <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchPosts()">
             </div>
         </div>
 
-        <nav class="cat-nav">
+        <nav class="cat-nav-mobile">
             <a onclick="filterPosts('ALL')" class="cat-link">Home</a>
             <a onclick="filterPosts('APPS')" class="cat-link">Apps</a>
-            <a onclick="filterPosts('TECHNOLOGY')" class="cat-link">Technology</a>
-            <a onclick="filterPosts('EDUCATIONAL')" class="cat-link">Educational</a>
+            <a onclick="filterPosts('TECHNOLOGY')" class="cat-link">Tech</a>
+            <a onclick="filterPosts('EDUCATIONAL')" class="cat-link">Education</a>
             <a onclick="filterPosts('HACKING')" class="cat-link">Hacking</a>
             <a onclick="filterPosts('AI IMAGE PROMPT')" class="cat-link">AI Image</a>
             <a onclick="filterPosts('AI VIDEO PROMPT')" class="cat-link">AI Video</a>
-            <a onclick="filterPosts('SMARTPHONE')" class="cat-link">Smartphone</a>
-            <a onclick="filterPosts('HINDI STORY')" class="cat-link">Hindi Story</a>
-            <a onclick="filterPosts('NEWS')" class="cat-link">News</a>
         </nav>
     </div>
 </header>
 
-<div class="ad-unit">Google AdSense Header Ad (Place your code here)</div>
-
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <h3 style="margin:0; font-family:'Orbitron';">MENU</h3>
-        <span onclick="toggleMenu()" style="cursor:pointer; font-size:30px;">&times;</span>
-    </div>
+<div class="main-wrapper">
     
-    <div class="sidebar-content">
-        <a onclick="filterPosts('ALL')" class="sidebar-link">🏠 Home</a>
-        <a onclick="filterPosts('APPS')" class="sidebar-link">📱 Apps</a>
-        <a onclick="filterPosts('TECHNOLOGY')" class="sidebar-link">⚙️ Technology</a>
-        <a onclick="filterPosts('EDUCATIONAL')" class="sidebar-link">📚 Educational</a>
-        <a onclick="filterPosts('HACKING')" class="sidebar-link">🛡️ Hacking</a>
-        <a onclick="filterPosts('AI IMAGE PROMPT')" class="sidebar-link">🎨 AI Image</a>
-        <a onclick="filterPosts('AI VIDEO PROMPT')" class="sidebar-link">🎬 AI Video</a>
-        <a onclick="filterPosts('SMARTPHONE')" class="sidebar-link">🤳 Smartphone</a>
-        <a onclick="filterPosts('HINDI STORY')" class="sidebar-link">📖 Hindi Story</a>
-        <a onclick="filterPosts('NEWS')" class="sidebar-link">📰 News</a>
-    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>MENU</h3>
+            <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        </div>
+        
+        <div class="sidebar-content">
+            <a onclick="filterPosts('ALL')" class="sidebar-link">🏠 Home</a>
+            <a onclick="filterPosts('APPS')" class="sidebar-link">📱 Apps</a>
+            <a onclick="filterPosts('TECHNOLOGY')" class="sidebar-link">⚙️ Technology</a>
+            <a onclick="filterPosts('EDUCATIONAL')" class="sidebar-link">📚 Educational</a>
+            <a onclick="filterPosts('HACKING')" class="sidebar-link">🛡️ Hacking</a>
+            <a onclick="filterPosts('AI IMAGE PROMPT')" class="sidebar-link">🎨 AI Image</a>
+            <a onclick="filterPosts('AI VIDEO PROMPT')" class="sidebar-link">🎬 AI Video</a>
+            <a onclick="filterPosts('SMARTPHONE')" class="sidebar-link">🤳 Smartphone</a>
+            <a onclick="filterPosts('HINDI STORY')" class="sidebar-link">📖 Hindi Story</a>
+            <a onclick="filterPosts('NEWS')" class="sidebar-link">📰 News</a>
+        </div>
 
-    <div class="sidebar-footer">
-        <div class="sb-social-links">
-            <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.youtube.com/@Internet_Skill" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="https://t.me/Internetskil" target="_blank"><i class="fab fa-telegram"></i></a>
+        <div class="sidebar-ad">
+            Google AdSense Sidebar Ad
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="sb-social-links">
+                <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@Internet_Skill" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/Internetskil" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://www.instagram.com/internet_skill_?igsh=OXFyMDczYWhqNmE2" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <h2 id="categoryTitle" style="border-left: 6px solid var(--pink); padding-left: 15px; margin-bottom: 35px; font-size:20px;">Latest Updates</h2>
-    <div id="postsGrid"></div>
-</div>
+    <div class="content-area">
+        <div class="ad-unit">Google AdSense Header Ad (Place your code here)</div>
 
-<div class="ad-unit">Google AdSense Footer Ad (Place your code here)</div>
+        <h2 id="categoryTitle" style="border-left: 5px solid var(--pink); padding-left: 15px; margin: 25px 0;">Latest Updates</h2>
+        
+        <div id="postsGrid"></div>
+
+        <div class="pagination" id="pagination">
+            <button onclick="prevPage()" id="btnPrev">« Previous</button>
+            <span id="pageNumbers">Page 1 of 1</span>
+            <button onclick="nextPage()" id="btnNext">Next »</button>
+        </div>
+
+        <div class="ad-unit">Google AdSense Footer Ad (Place your code here)</div>
+    </div>
+</div>
 
 <footer>
     <div class="footer-legal-links">
@@ -199,18 +296,20 @@
         <a href="/privacy">Privacy Policy</a>
         <a href="/disclaimer">Disclaimer</a>
     </div>
-
     <div class="footer-social">
         <a href="https://www.facebook.com/share/14RfVdeqBj6/" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.youtube.com/@Internet_Skill" target="_blank"><i class="fab fa-youtube"></i></a>
         <a href="https://t.me/Internetskil" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.instagram.com/internet_skill_?igsh=OXFyMDczYWhqNmE2" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
-
-    <p>&copy; 2026 Internet Skill (.in). All Rights Reserved.</p>
+    <p>&copy; 2026 Internet Skill. All Rights Reserved.</p>
 </footer>
 
 <script>
     let allPosts = [];
+    let currentPage = 1;
+    const postsPerPage = 6; 
+
     async function loadPosts() {
         try {
             const res = await fetch('/posts.json');
@@ -218,30 +317,54 @@
             displayPosts(allPosts);
         } catch (e) { console.error("Error loading posts"); }
     }
+
     function displayPosts(posts) {
         const grid = document.getElementById('postsGrid');
-        grid.innerHTML = posts.slice().reverse().map(post => `
+        const startIndex = (currentPage - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+        const paginatedPosts = posts.slice().reverse().slice(startIndex, endIndex);
+
+        grid.innerHTML = paginatedPosts.map(post => `
             <div class="post-card" onclick="location.href='/post/${post.id}'">
                 <img src="${post.img}" onerror="this.src='https://via.placeholder.com/400x250?text=No+Image'">
                 <div class="post-card-info">
-                    <span style="font-size: 11px; background: var(--primary); color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; display: inline-block;">${post.category || 'GENERAL'}</span>
-                    <h3 style="font-size:19px; margin:12px 0;">${post.title}</h3>
-                    <p style="font-size:14px; color:#666; line-height: 1.6;">${post.desc ? post.desc.substring(0, 100) + '...' : ''}</p>
+                    <span class="post-cat-tag">${post.category || 'GENERAL'}</span>
+                    <h3>${post.title}</h3>
+                    <p>${post.desc ? post.desc.substring(0, 90) + '...' : ''}</p>
+                    <div class="read-more-text">Read Post »</div>
                 </div>
             </div>
         `).join('');
+        
+        updatePagination(posts.length);
     }
+
+    function updatePagination(totalPosts) {
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+        const pageNumbers = document.getElementById('pageNumbers');
+        pageNumbers.innerText = `Page ${currentPage} of ${totalPages || 1}`;
+        document.getElementById('btnPrev').disabled = currentPage === 1;
+        document.getElementById('btnNext').disabled = currentPage === totalPages || totalPages === 0;
+    }
+
+    function nextPage() { currentPage++; displayPosts(allPosts); window.scrollTo(0,0); }
+    function prevPage() { currentPage--; displayPosts(allPosts); window.scrollTo(0,0); }
+
     function filterPosts(category) {
+        currentPage = 1;
         document.getElementById('categoryTitle').innerText = category === 'ALL' ? 'Latest Updates' : category;
         const filtered = category === 'ALL' ? allPosts : allPosts.filter(p => p.category.toUpperCase() === category.toUpperCase());
         displayPosts(filtered);
-        if(window.innerWidth < 1024 && document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+        if(window.innerWidth < 1024) document.getElementById('sidebar').classList.remove('active');
     }
+
     function searchPosts() {
         const term = document.getElementById('searchInput').value.toLowerCase();
         const filtered = allPosts.filter(p => p.title.toLowerCase().includes(term));
+        currentPage = 1; 
         displayPosts(filtered);
     }
+
     function toggleMenu() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
